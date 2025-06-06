@@ -85,7 +85,7 @@ Before you begin, ensure you have the following installed:
 
 1.  **Clone the Repository:**
     ```bash
-    git clone <your-repo-url> # Replace <your-repo-url> with the actual repository URL
+    git clone https://github.com/PiVKT/rag_chatbot.git
     cd rag_chatbot
     ```
 
