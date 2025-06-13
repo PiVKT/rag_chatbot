@@ -189,7 +189,7 @@ class WebScraper:
         
         for line in lines:
             line = line.strip()
-            if line:
+            if line and len(line) > 10:
                 cleaned_lines.append(line)
         
         return '\n'.join(cleaned_lines)
