@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from typing import Optional
+import logging
 
 class Settings(BaseSettings):
     # Database
@@ -20,7 +21,7 @@ class Settings(BaseSettings):
     
     # Vector search
     similarity_threshold: float = 0.7
-    max_results: int = 5
+    max_results: int = 10
     
     pgvector_extension: str = "vector"
     log_level: str = "INFO"
@@ -28,4 +29,5 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+logging.getLogger('watchfiles.main').setLevel(logging.WARNING)
 settings = Settings()
