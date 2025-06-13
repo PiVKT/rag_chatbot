@@ -66,7 +66,7 @@ class PgVectorStore:
             logger.error(f"Error adding document: {str(e)}")
             raise
     
-    def semantic_search(self, query: str, max_results: int = 5, 
+    def semantic_search(self, query: str, max_results: int = 10, 
                        similarity_threshold: float = 0.7) -> List[SearchResult]:
         """
         Tìm kiếm semantic trong vector store
