@@ -29,5 +29,4 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
-logging.getLogger('watchfiles.main').setLevel(logging.WARNING)
 settings = Settings()
