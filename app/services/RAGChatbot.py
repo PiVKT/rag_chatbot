@@ -16,6 +16,13 @@ class RAGChatbot:
         self.vector_store = vector_store
         self.conversations: Dict[str, List[Dict]] = {}
     
+    def chat_many(self, messages: List[str], conversation_id: Optional[str] = None) -> List[tuple[str, List[SearchResult], str]]:
+        responses = []
+        for message in messages:
+            response = self.chat(message, conversation_id)
+            responses.append(response)
+        return responses
+
     def chat(self, message: str, conversation_id: Optional[str] = None) -> tuple[str, List[SearchResult], str]:
         """
         Xử lý chat với RAG
