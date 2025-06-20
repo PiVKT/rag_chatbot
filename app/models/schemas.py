@@ -42,3 +42,11 @@ class ChatResponse(BaseModel):
     response: str
     sources: List[SearchResult]
     conversation_id: str
+
+class ChatManyRequest(BaseModel):
+    messages: List[str]
+    conversation_id: Optional[str] = None
+
+class ChatManyResponse(BaseModel):
+    responses: List[ChatResponse]
+        

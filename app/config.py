@@ -29,4 +29,6 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
 
+logging.basicConfig(level=logging.INFO)
+logging.getLogger("watchfiles").setLevel(logging.ERROR)
 settings = Settings()
