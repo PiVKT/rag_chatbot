@@ -50,3 +50,7 @@ class ChatManyRequest(BaseModel):
 class ChatManyResponse(BaseModel):
     responses: List[ChatResponse]
         
+class Chunk(BaseModel):
+    type: str
+    content: str
+    children: Optional[List[Any]] = None

@@ -47,7 +47,8 @@ rag_chatbot/
 │   │   ├── text_processor.py  # Text processing and chunking
 │   │   ├── embeddings.py      # Embeddings generation (Gemini)
 │   │   ├── vector_store.py    # Interaction with PgVector
-│   │   └── chatbot.py         # Core chatbot logic
+│   │   ├── RAGChatbot.py      # RAG-enhanced chatbot implementation
+│   │   └── SimpleChatbot.py   # Basic chatbot implementation
 │   ├── api/
 │   │   ├── __init__.py
 │   │   ├── routes/

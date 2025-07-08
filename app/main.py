@@ -5,7 +5,7 @@ import logging
 
 from app.config import settings
 from app.models.database import create_tables
-from app.api.routes import scraping, search, chat
+from app.api.routes import scraping, search, chat, upload
 from app.utils.logging import setup_logging
 
 # Setup logging
@@ -49,6 +49,7 @@ app.add_middleware(
 app.include_router(scraping.router, prefix="/api/v1")
 app.include_router(search.router, prefix="/api/v1")
 app.include_router(chat.router, prefix="/api/v1")
+app.include_router(upload.router, prefix="/api/v1")
 
 @app.get("/")
 async def root():

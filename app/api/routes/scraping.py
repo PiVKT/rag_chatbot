@@ -6,7 +6,7 @@ import logging
 from app.models.database import get_db
 from app.models.schemas import WebsiteRequest, DocumentResponse
 from app.services.web_scraper import WebScraper
-from app.services.text_processor import SemanticTextProcessor
+from app.services.semantic_chunking import SemanticTextProcessor
 from app.services.vector_store import PgVectorStore
 
 router = APIRouter(prefix="/scraping", tags=["scraping"])
