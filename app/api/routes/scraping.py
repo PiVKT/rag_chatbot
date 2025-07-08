@@ -8,6 +8,7 @@ from app.models.schemas import WebsiteRequest, DocumentResponse
 from app.services.web_scraper import WebScraper
 from app.services.semantic_chunking import SemanticTextProcessor
 from app.services.vector_store import PgVectorStore
+from app.services.HierarchicalWebChunker import HierarchicalWebChunker
 
 router = APIRouter(prefix="/scraping", tags=["scraping"])
 logger = logging.getLogger(__name__)
@@ -60,27 +61,26 @@ async def scrape_website(
         logger.error(f"Error starting scrape task: {str(e)}")
         raise HTTPException(status_code=500, detail="Lỗi khi bắt đầu scrape website")
 
+
 async def scrape_website_task(url: str, max_depth: int, max_pages: int, db: Session):
-    """Background task để scrape website"""
     try:
         logger.info(f"Starting scrape task for {url}")
         
-        # Khởi tạo services
+        # Initialize services
         scraper = WebScraper()
-        processor = SemanticTextProcessor()
+        chunker = HierarchicalWebChunker(max_words=1000, overlap_words=200)
         vector_store = PgVectorStore(db)
         
         # Scrape website
         scraped_content = scraper.scrape_website(url, max_depth, max_pages)
         
-        # Xử lý từng trang
+        # Process each page with hierarchical chunking
         for content in scraped_content:
             try:
-                # Semantic chunking
-                chunks = processor.semantic_chunking(content.content, content.metadata)
-                chunk_texts = [chunk.page_content for chunk in chunks]
+                # Hierarchical chunking
+                chunk_texts = chunker.chunk_scraped_content(content)
                 
-                # Lưu vào vector store
+                # Save to vector store
                 vector_store.add_document(
                     url=content.url,
                     title=content.title,
@@ -89,7 +89,7 @@ async def scrape_website_task(url: str, max_depth: int, max_pages: int, db: Sess
                     metadata=content.metadata
                 )
                 
-                logger.info(f"Processed {content.url} with {len(chunk_texts)} chunks")
+                logger.info(f"Processed {content.url} with {len(chunk_texts)} hierarchical chunks")
                 
             except Exception as e:
                 logger.error(f"Error processing {content.url}: {str(e)}")
@@ -99,6 +99,8 @@ async def scrape_website_task(url: str, max_depth: int, max_pages: int, db: Sess
         
     except Exception as e:
         logger.error(f"Error in scrape task: {str(e)}")
+
+    return scrape_website_task
 
 @router.get("/documents", response_model=List[DocumentResponse])
 async def get_documents(skip: int = 0, limit: int = 20, db: Session = Depends(get_db)):

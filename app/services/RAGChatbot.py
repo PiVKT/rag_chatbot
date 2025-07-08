@@ -141,9 +141,9 @@ TRẢ LỜI:"""
             "assistant": assistant_response
         })
         
-        # Giữ tối đa 10 lượt hội thoại
-        if len(self.conversations[conversation_id]) > 10:
-            self.conversations[conversation_id] = self.conversations[conversation_id][-10:]
+        # Giữ tối đa 5 lượt hội thoại
+        if len(self.conversations[conversation_id]) > 5:
+            self.conversations[conversation_id] = self.conversations[conversation_id][-5:]
     
     def clear_conversation(self, conversation_id: str):
         """Xóa lịch sử hội thoại"""

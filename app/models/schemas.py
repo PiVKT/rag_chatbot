@@ -53,4 +53,4 @@ class ChatManyResponse(BaseModel):
 class Chunk(BaseModel):
     type: str
     content: str
-    children: Optional[List[Any]] = None
+    children: Optional[List[Any]] = []

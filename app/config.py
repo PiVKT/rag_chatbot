@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     
     # Vector search
     similarity_threshold: float = 0.7
-    max_results: int = 10
+    max_results: int = 20 # Số lượng kết quả tối đa
     
     pgvector_extension: str = "vector"
     log_level: str = "INFO"
